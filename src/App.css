@@ -19,6 +19,17 @@
   color: white;
 }
 
+.Content{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.responsive{
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
+
 .App-link {
   color: #61dafb;
 }
