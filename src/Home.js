@@ -16,20 +16,19 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.background.paper,
     }
 }));
+var page = 1
 
 export default function Home() {
-    const [movies, setMovies] = useState([])
     const [isFetching, setIsFetching] = useState(false);
-    const [page, setPage] = useState(1)
+
 
     const classes = useStyles();
-    const category = useContext(AppContext)
+    const [appState, setAppState] = useContext(AppContext)
 
     useEffect(() => {
-        setPage(1)
-        setMovies([])
-        fetchData(1)
-    }, [category])
+        setIsFetching(true)
+        fetchData()
+    }, [appState.selected])
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
@@ -46,12 +45,22 @@ export default function Home() {
         setIsFetching(true);
     }
 
-    function fetchData(pageNumber) {
+    function getPageNumber() {
+        if (appState.selected === 'popular') {
+            debugger
+            return appState.popular.currentPage
+        } else if (appState.selected === 'top_rated') {
+            return appState.topRated.currentPage
+        } else if (appState.selected === 'now_playing') {
+            return appState.nowPlaying.currentPage
+        }
+    }
+
+    function fetchData() {
         axios
-            .get(`https://api.themoviedb.org/3/movie/${category}?api_key=3d9f6ef05faa3072ee2caf7fb6870964&language=en-US&page=${pageNumber}`)
+            .get(`https://api.themoviedb.org/3/movie/${appState.selected}?api_key=3d9f6ef05faa3072ee2caf7fb6870964&language=en-US&page=${getPageNumber()}`)
             .then(response => {
-                setPage(pageNumber + 1)
-                setMovies([...movies, ...response.data.results])
+                appState.changeState(appState.selected, response.data.results)
                 setIsFetching(false)
             })
             .catch(error => {
@@ -61,28 +70,19 @@ export default function Home() {
 
 
     return (
-        <AppConsumer>
-            {({ value }) => (
-                <Fragment>
-                    <p>{value}</p>
-                    <div className={classes.root}>
-                        <GridList cellHeight={300} cols={5} className={classes.gridList} >
-                            {
-
-                                movies.map((item) =>
-                                    <GridListTile key={item.id}>
-                                        <img src={`http://image.tmdb.org/t/p/w185/${item.poster_path}`} alt={item.title} />
-                                    </GridListTile>
-                                )
-                            }
-                            {
-                                console.log(movies)
-                            }
-                        </GridList>
-                        {isFetching && 'Fetching more list items...'}
-                    </div >
-                </Fragment>)
-            }
-        </AppConsumer>
+        <Fragment>
+            <div className={classes.root}>
+                <GridList cellHeight={300} cols={5} className={classes.gridList} >
+                    {
+                        appState.popular.movies.map((item) =>
+                            <GridListTile key={item.id}>
+                                <img src={`http://image.tmdb.org/t/p/w185/${item.poster_path}`} alt={item.title} />
+                            </GridListTile>
+                        )
+                    }
+                </GridList>
+                {isFetching && 'Fetching more list items...'}
+            </div >
+        </Fragment>
     );
 }
