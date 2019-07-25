@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
-import { TextField, Button , FormControlLabel, Checkbox} from '@material-ui/core'
+import { TextField, Button, FormControlLabel, Checkbox } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles';
+import Header from './Header'
+import { Route } from 'react-router'
+import axios from 'axios'
+import { from } from 'rxjs';
+import {Redirect} from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -33,10 +38,11 @@ const useStyles = makeStyles(theme => ({
 
 
 
-export default () => {
+export default (props) => {
     const classes = useStyles()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [success, setSuccess] = useState(false)
 
 
     const setValue = (event) => {
@@ -62,55 +68,72 @@ export default () => {
         return username !== '' && validateEmail(username)
     }
 
+    const getRequestId = async (event) => {
+        event.preventDefault()
+        try {
+            let response = await axios.get('https://api.themoviedb.org/3/authentication/token/new?api_key=3d9f6ef05faa3072ee2caf7fb6870964')
+            if (response.status === 200) {
+                let session = await axios.post('https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=3d9f6ef05faa3072ee2caf7fb6870964',
+                    { username: username, password: password, request_token: response.data.request_token })
+                props.history.push('/movies')
+            }
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
     return (
-        <div className={classes.container}>
-            <div className={classes.loginContainer}>
-                <form className={classes.form}>
-                    <TextField
-                        error={!isValidEmail(username)}
-                        helpingText={!isValidEmail ? 'enter valid email' : ''}
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        onChange={setValue}
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                    />
-                    <TextField
-                        error={password === ''}
-                        helpingText={password === '' ? 'enter valid password' : ''}
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        onChange={setValue}
-                        autoComplete="current-password"
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Sign In
+        <Route>
+            <div className={classes.container}>
+                <div className={classes.loginContainer}>
+                    <form className={classes.form} onSubmit={getRequestId}>
+                        <TextField
+                            error={!isValidEmail(username)}
+                            helpingText={!isValidEmail ? 'enter valid email' : ''}
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            onChange={setValue}
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                        />
+                        <TextField
+                            error={password === ''}
+                            helpingText={password === '' ? 'enter valid password' : ''}
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            onChange={setValue}
+                            autoComplete="current-password"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="primary" />}
+                            label="Remember me"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Sign In
               </Button>
 
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
+        </Route>
     );
 
 }
