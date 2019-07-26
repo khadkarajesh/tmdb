@@ -47,7 +47,6 @@ export default function Home() {
 
     function getPageNumber() {
         if (appState.selected === 'popular') {
-            debugger
             return appState.popular.currentPage
         } else if (appState.selected === 'top_rated') {
             return appState.topRated.currentPage

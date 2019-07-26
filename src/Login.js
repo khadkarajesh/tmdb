@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TextField, Button, FormControlLabel, Checkbox } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles';
 import Header from './Header'
 import { Route } from 'react-router'
 import axios from 'axios'
 import { from } from 'rxjs';
-import {Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -42,8 +42,7 @@ export default (props) => {
     const classes = useStyles()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [success, setSuccess] = useState(false)
-
+    const [token, setToken] = useState(localStorage.getItem('token') || '')
 
     const setValue = (event) => {
         switch (event.target.id) {
@@ -58,6 +57,12 @@ export default (props) => {
                 break;
         }
     }
+
+    useEffect(() => {
+        localStorage.setItem('token', token)
+        console.log(`${localStorage.getItem('token')}  = ${token}`)
+    }, [token])
+
 
     const validateEmail = (email) => {
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -75,6 +80,8 @@ export default (props) => {
             if (response.status === 200) {
                 let session = await axios.post('https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=3d9f6ef05faa3072ee2caf7fb6870964',
                     { username: username, password: password, request_token: response.data.request_token })
+                console.log(session.data.request_token)
+                setToken(session.data.request_token)
                 props.history.push('/movies')
             }
         }
@@ -84,56 +91,55 @@ export default (props) => {
     }
 
     return (
-        <Route>
-            <div className={classes.container}>
-                <div className={classes.loginContainer}>
-                    <form className={classes.form} onSubmit={getRequestId}>
-                        <TextField
-                            error={!isValidEmail(username)}
-                            helpingText={!isValidEmail ? 'enter valid email' : ''}
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            onChange={setValue}
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                        />
-                        <TextField
-                            error={password === ''}
-                            helpingText={password === '' ? 'enter valid password' : ''}
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            onChange={setValue}
-                            autoComplete="current-password"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Sign In
+        <div className={classes.container}>
+            <div className={classes.loginContainer}>
+                <form className={classes.form} onSubmit={getRequestId}>
+                    <TextField
+                        error={!isValidEmail(username)}
+                        helpingText={!isValidEmail ? 'enter valid email' : ''}
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        onChange={setValue}
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+                    <TextField
+                        error={password === ''}
+                        helpingText={password === '' ? 'enter valid password' : ''}
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        onChange={setValue}
+                        autoComplete="current-password"
+                    />
+                    <FormControlLabel
+                        control={<Checkbox value="remember" color="primary" />}
+                        label="Remember me"
+                    />
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                    >
+                        Sign In
               </Button>
 
-                    </form>
-                </div>
+                </form>
             </div>
-        </Route>
+            {<p>{`${token}`}</p>}
+        </div>
     );
 
 }
