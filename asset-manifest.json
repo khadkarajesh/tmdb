@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/tmdb/static/css/main.f64c5179.chunk.css",
-    "main.js": "/tmdb/static/js/main.5a4e0d7b.chunk.js",
-    "main.js.map": "/tmdb/static/js/main.5a4e0d7b.chunk.js.map",
+    "main.js": "/tmdb/static/js/main.45e1c309.chunk.js",
+    "main.js.map": "/tmdb/static/js/main.45e1c309.chunk.js.map",
     "runtime~main.js": "/tmdb/static/js/runtime~main.b70ce638.js",
     "runtime~main.js.map": "/tmdb/static/js/runtime~main.b70ce638.js.map",
     "static/js/2.c9ef2d6b.chunk.js": "/tmdb/static/js/2.c9ef2d6b.chunk.js",
     "static/js/2.c9ef2d6b.chunk.js.map": "/tmdb/static/js/2.c9ef2d6b.chunk.js.map",
     "index.html": "/tmdb/index.html",
-    "precache-manifest.d60c12ecda4f3d7ee35afad7f8509e87.js": "/tmdb/precache-manifest.d60c12ecda4f3d7ee35afad7f8509e87.js",
+    "precache-manifest.965e83ea372b3b227da50b2ae6684c71.js": "/tmdb/precache-manifest.965e83ea372b3b227da50b2ae6684c71.js",
     "service-worker.js": "/tmdb/service-worker.js",
     "static/css/main.f64c5179.chunk.css.map": "/tmdb/static/css/main.f64c5179.chunk.css.map"
   }
