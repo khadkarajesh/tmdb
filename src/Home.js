@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { GridList, GridListTile } from '@material-ui/core'
 import AppContext from './AppContext'
 import axios from 'axios'
-import AppConsumer from './AppContext'
 
 
 const useStyles = makeStyles(theme => ({
