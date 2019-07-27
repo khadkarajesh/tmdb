@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Tabs, Tab } from '@material-ui/core';
-import Home from './Home'
+import Home from './MovieList'
 import { AppProvider } from './AppContext'
 
 const useStyles = makeStyles(theme => ({

@@ -1,10 +1,9 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { GridList, GridListTile } from '@material-ui/core'
-import AppContext from './AppContext'
+import {Link} from 'react-router-dom'
 import axios from 'axios'
-import AppConsumer from './AppContext'
+import { from } from 'rxjs';
 
 
 const useStyles = makeStyles(theme => ({
@@ -16,19 +15,16 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.background.paper,
     }
 }));
-var page = 1
 
 export default function Home() {
     const [isFetching, setIsFetching] = useState(false);
-
-
     const classes = useStyles();
-    const [appState, setAppState] = useContext(AppContext)
+    const [movies, setMovies] = useState([])
 
     useEffect(() => {
         setIsFetching(true)
         fetchData()
-    }, [appState.selected])
+    }, [])
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
@@ -37,7 +33,7 @@ export default function Home() {
 
     useEffect(() => {
         if (!isFetching) return;
-        fetchData(page);
+        fetchData();
     }, [isFetching]);
 
     function handleScroll() {
@@ -45,22 +41,12 @@ export default function Home() {
         setIsFetching(true);
     }
 
-    function getPageNumber() {
-        if (appState.selected === 'popular') {
-            debugger
-            return appState.popular.currentPage
-        } else if (appState.selected === 'top_rated') {
-            return appState.topRated.currentPage
-        } else if (appState.selected === 'now_playing') {
-            return appState.nowPlaying.currentPage
-        }
-    }
 
     function fetchData() {
         axios
-            .get(`https://api.themoviedb.org/3/movie/${appState.selected}?api_key=3d9f6ef05faa3072ee2caf7fb6870964&language=en-US&page=${getPageNumber()}`)
+            .get(`https://api.themoviedb.org/3/movie/popular?api_key=3d9f6ef05faa3072ee2caf7fb6870964&language=en-US&page=1`)
             .then(response => {
-                appState.changeState(appState.selected, response.data.results)
+                setMovies(response.data.results)
                 setIsFetching(false)
             })
             .catch(error => {
@@ -74,10 +60,12 @@ export default function Home() {
             <div className={classes.root}>
                 <GridList cellHeight={300} cols={5} className={classes.gridList} >
                     {
-                        appState.popular.movies.map((item) =>
-                            <GridListTile key={item.id}>
-                                <img src={`http://image.tmdb.org/t/p/w185/${item.poster_path}`} alt={item.title} />
-                            </GridListTile>
+                        movies.map((item) =>
+                            <Link to={`/movies/${item.id}`}>
+                                <GridListTile key={item.id}>
+                                    <img src={`http://image.tmdb.org/t/p/w185/${item.poster_path}`} alt={item.title} />
+                                </GridListTile>
+                            </Link>
                         )
                     }
                 </GridList>
