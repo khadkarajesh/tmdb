@@ -1,7 +1,9 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { GridList, GridListTile } from '@material-ui/core'
+import {Link} from 'react-router-dom'
 import axios from 'axios'
+import { from } from 'rxjs';
 
 
 const useStyles = makeStyles(theme => ({
@@ -59,9 +61,11 @@ export default function Home() {
                 <GridList cellHeight={300} cols={5} className={classes.gridList} >
                     {
                         movies.map((item) =>
-                            <GridListTile key={item.id}>
-                                <img src={`http://image.tmdb.org/t/p/w185/${item.poster_path}`} alt={item.title} />
-                            </GridListTile>
+                            <Link to={`/movies/${item.id}`}>
+                                <GridListTile key={item.id}>
+                                    <img src={`http://image.tmdb.org/t/p/w185/${item.poster_path}`} alt={item.title} />
+                                </GridListTile>
+                            </Link>
                         )
                     }
                 </GridList>
