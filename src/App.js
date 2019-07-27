@@ -11,6 +11,7 @@ function App() {
       <Router>
         <Switch>
           <Route path="/login" exact component={Login} />
+          <Route path="/" exact component ={Login}/>
           <AuthenticatedRoute path="/movies" exact strict component={Header}/>
           <Route path="/movies/:id" component={MovieDetail}/>
         </Switch>
