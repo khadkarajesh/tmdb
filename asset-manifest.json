@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/khadkarajesh/tmdb/static/css/main.9e274351.chunk.css",
-    "main.js": "/khadkarajesh/tmdb/static/js/main.eb5ea6e4.chunk.js",
-    "main.js.map": "/khadkarajesh/tmdb/static/js/main.eb5ea6e4.chunk.js.map",
-    "runtime~main.js": "/khadkarajesh/tmdb/static/js/runtime~main.c5010c44.js",
-    "runtime~main.js.map": "/khadkarajesh/tmdb/static/js/runtime~main.c5010c44.js.map",
-    "static/js/2.46bae4f6.chunk.js": "/khadkarajesh/tmdb/static/js/2.46bae4f6.chunk.js",
-    "static/js/2.46bae4f6.chunk.js.map": "/khadkarajesh/tmdb/static/js/2.46bae4f6.chunk.js.map",
-    "index.html": "/khadkarajesh/tmdb/index.html",
-    "precache-manifest.bc07f3706b2c752b9687cacc8129cc3f.js": "/khadkarajesh/tmdb/precache-manifest.bc07f3706b2c752b9687cacc8129cc3f.js",
-    "service-worker.js": "/khadkarajesh/tmdb/service-worker.js",
-    "static/css/main.9e274351.chunk.css.map": "/khadkarajesh/tmdb/static/css/main.9e274351.chunk.css.map"
+    "main.css": "/tmdb/static/css/main.9e274351.chunk.css",
+    "main.js": "/tmdb/static/js/main.004a9b43.chunk.js",
+    "main.js.map": "/tmdb/static/js/main.004a9b43.chunk.js.map",
+    "runtime~main.js": "/tmdb/static/js/runtime~main.b70ce638.js",
+    "runtime~main.js.map": "/tmdb/static/js/runtime~main.b70ce638.js.map",
+    "static/js/2.46bae4f6.chunk.js": "/tmdb/static/js/2.46bae4f6.chunk.js",
+    "static/js/2.46bae4f6.chunk.js.map": "/tmdb/static/js/2.46bae4f6.chunk.js.map",
+    "index.html": "/tmdb/index.html",
+    "precache-manifest.d72eab7d1e62d29ccf9f089b02d88a49.js": "/tmdb/precache-manifest.d72eab7d1e62d29ccf9f089b02d88a49.js",
+    "service-worker.js": "/tmdb/service-worker.js",
+    "static/css/main.9e274351.chunk.css.map": "/tmdb/static/css/main.9e274351.chunk.css.map"
   }
 }
