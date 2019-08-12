@@ -1,9 +1,8 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, {useEffect, Fragment, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { GridList, GridListTile } from '@material-ui/core'
 import {Link} from 'react-router-dom'
-import axios from 'axios'
-import { from } from 'rxjs';
+import {AppContext} from './AppContext';
 
 
 const useStyles = makeStyles(theme => ({
@@ -16,44 +15,20 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function Home() {
-    const [isFetching, setIsFetching] = useState(false);
+export default function MovieList() {
     const classes = useStyles();
-    const [movies, setMovies] = useState([])
-
-    useEffect(() => {
-        setIsFetching(true)
-        fetchData()
-    }, [])
+    const {movies, loading, loadMore} = useContext(AppContext)
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    useEffect(() => {
-        if (!isFetching) return;
-        fetchData();
-    }, [isFetching]);
 
     function handleScroll() {
-        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isFetching) return;
-        setIsFetching(true);
+        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || loading) return;
+        loadMore()
     }
-
-
-    function fetchData() {
-        axios
-            .get(`https://api.themoviedb.org/3/movie/popular?api_key=3d9f6ef05faa3072ee2caf7fb6870964&language=en-US&page=1`)
-            .then(response => {
-                setMovies(response.data.results)
-                setIsFetching(false)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
-
 
     return (
         <Fragment>
@@ -63,13 +38,13 @@ export default function Home() {
                         movies.map((item) =>
                             <Link to={`/movies/${item.id}`}>
                                 <GridListTile key={item.id}>
-                                    <img src={`http://image.tmdb.org/t/p/w185/${item.poster_path}`} alt={item.title} />
+                                    <img src={`http://image.tmdb.org/t/p/w500/${item.poster_path}`} alt={item.title} />
                                 </GridListTile>
                             </Link>
                         )
                     }
                 </GridList>
-                {isFetching && 'Fetching more list items...'}
+                {loading && 'Fetching more list items...'}
             </div >
         </Fragment>
     );
