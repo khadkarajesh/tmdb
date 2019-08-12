@@ -1,7 +1,9 @@
-import React, {useEffect, Fragment, useContext } from 'react';
+import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { GridList, GridListTile } from '@material-ui/core'
 import {Link} from 'react-router-dom'
+import axios from 'axios'
+import { from } from 'rxjs';
 import {AppContext} from './AppContext';
 
 
@@ -16,6 +18,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function MovieList() {
+    const [isFetching, setIsFetching] = useState(false);
     const classes = useStyles();
     const {movies, loading, loadMore} = useContext(AppContext)
 
@@ -24,11 +27,11 @@ export default function MovieList() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-
     function handleScroll() {
-        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || loading) return;
+        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isFetching) return;
         loadMore()
     }
+
 
     return (
         <Fragment>
