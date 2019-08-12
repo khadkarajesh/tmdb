@@ -36,7 +36,7 @@ export default function MovieTabs() {
                 <Tabs value={value} onChange={changeMenu}>
                     {
                         categories.map((item) => {
-                            return <Tab label={item} />
+                            return <Tab label={item.replace('_' , ' ')} />
                         })
                     }
                 </Tabs>
