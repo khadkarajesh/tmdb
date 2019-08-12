@@ -1,20 +1,14 @@
 import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, CssBaseline} from '@material-ui/core'
+import { Grid, CssBaseline } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { AppContext } from './AppContext';
 
 
 const useStyles = makeStyles(theme => ({
     root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-        overflow: 'hidden',
-        backgroundColor: theme.palette.background.paper,
-        maxWidth: '100vw',
-        height: '100vh',
-        overflowX:'hidden'
+        flexGrow: '1',
+        marginTop:'16px'
     }
 }));
 
@@ -36,19 +30,21 @@ export default function MovieList() {
 
     return (
         <Fragment>
-          <CssBaseline />
-            <Grid item xs={12}>
-                <Grid container justify="center" spacing='4'>
-                    {movies.map(item => (
-                        <Grid key={item} item>
-                            <Link to={`/movies/${item.id}`}>
-                                <img src={`http://image.tmdb.org/t/p/w500/${item.poster_path}`} alt={item.title} />
-                            </Link>
-                        </Grid>
-                    ))}
+            <CssBaseline />
+            <div className={classes.root}>
+                <Grid item xs={12}>
+                    <Grid container justify="center" spacing={2}>
+                        {movies.map(item => (
+                            <Grid key={item} item>
+                                <Link to={`/movies/${item.id}`}>
+                                    <img src={`http://image.tmdb.org/t/p/w300/${item.poster_path}`} alt={item.title} />
+                                </Link>
+                            </Grid>
+                        ))}
+                    </Grid>
                 </Grid>
-            </Grid>
-            {loading && 'Fetching more list items...'}
+                {loading && 'Fetching more list items...'}
+            </div>
         </Fragment>
     );
 }
