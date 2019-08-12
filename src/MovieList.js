@@ -1,10 +1,8 @@
 import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { GridList, GridListTile } from '@material-ui/core'
-import {Link} from 'react-router-dom'
-import axios from 'axios'
-import { from } from 'rxjs';
-import {AppContext} from './AppContext';
+import { Grid} from '@material-ui/core'
+import { Link } from 'react-router-dom'
+import { AppContext } from './AppContext';
 
 
 const useStyles = makeStyles(theme => ({
@@ -20,7 +18,7 @@ const useStyles = makeStyles(theme => ({
 export default function MovieList() {
     const [isFetching, setIsFetching] = useState(false);
     const classes = useStyles();
-    const {movies, loading, loadMore} = useContext(AppContext)
+    const { movies, loading, loadMore } = useContext(AppContext)
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
@@ -35,20 +33,18 @@ export default function MovieList() {
 
     return (
         <Fragment>
-            <div className={classes.root}>
-                <GridList cellHeight={300} cols={5} className={classes.gridList} >
-                    {
-                        movies.map((item) =>
+            <Grid item xs={12}>
+                <Grid container justify="center" spacing='4'>
+                    {movies.map(item => (
+                        <Grid key={item} item>
                             <Link to={`/movies/${item.id}`}>
-                                <GridListTile key={item.id}>
-                                    <img src={`http://image.tmdb.org/t/p/w500/${item.poster_path}`} alt={item.title} />
-                                </GridListTile>
+                                <img src={`http://image.tmdb.org/t/p/w500/${item.poster_path}`} alt={item.title} />
                             </Link>
-                        )
-                    }
-                </GridList>
-                {loading && 'Fetching more list items...'}
-            </div >
+                        </Grid>
+                    ))}
+                </Grid>
+            </Grid>
+            {loading && 'Fetching more list items...'}
         </Fragment>
     );
 }
