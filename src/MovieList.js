@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid} from '@material-ui/core'
+import { Grid, CssBaseline} from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { AppContext } from './AppContext';
 
@@ -12,6 +12,9 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'space-around',
         overflow: 'hidden',
         backgroundColor: theme.palette.background.paper,
+        maxWidth: '100vw',
+        height: '100vh',
+        overflowX:'hidden'
     }
 }));
 
@@ -33,6 +36,7 @@ export default function MovieList() {
 
     return (
         <Fragment>
+          <CssBaseline />
             <Grid item xs={12}>
                 <Grid container justify="center" spacing='4'>
                     {movies.map(item => (
