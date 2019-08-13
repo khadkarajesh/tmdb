@@ -1,6 +1,7 @@
 import React, { useState, useContext, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Tabs, Tab, CssBaseline } from '@material-ui/core';
+import { AppBar, Tabs, Tab, CssBaseline, Toolbar } from '@material-ui/core';
+import Search from './component/Search'
 import MovieList from './MovieList'
 import { AppContext } from './AppContext'
 
@@ -8,10 +9,13 @@ const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
-        overflowX:'hidden'
+        overflowX: 'hidden'
     },
-    appBar:{
-        overflow:'hidden'
+    appBar: {
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }
 }));
 
@@ -30,16 +34,19 @@ export default function MovieTabs() {
 
     return (
         <Fragment>
-        <CssBaseline />
+            <CssBaseline />
             <div className={classes.root}>
                 <AppBar position="static" className={classes.appBar} >
-                    <Tabs value={value} onChange={changeMenu}>
-                        {
-                            categories.map((item) => {
-                                return <Tab label={item.replace('_', ' ')} />
-                            })
-                        }
-                    </Tabs>
+                    <Toolbar>
+                        <Tabs value={value} onChange={changeMenu}>
+                            {
+                                categories.map((item) => {
+                                    return <Tab label={item.replace('_', ' ')} />
+                                })
+                            }
+                        </Tabs>
+                        <Search />
+                    </Toolbar>
                 </AppBar>
                 <MovieList />
             </div>
