@@ -6,7 +6,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const options = [
   'Logout',
-  'Umbriel',
 ];
 
 const ITEM_HEIGHT = 48;

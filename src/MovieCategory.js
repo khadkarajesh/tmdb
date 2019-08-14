@@ -54,7 +54,7 @@ export default function MovieTabs() {
                         <div style={{ alignItems: 'center', position: 'relative', top: '6px' }}><Search /></div>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <Avatar />
+                        <Avatar src={`https://www.gravatar.com/avatar/${localStorage.getItem('avatar')}`}/>
                         <DottedMenu />
                     </div>
                 </AppBar>

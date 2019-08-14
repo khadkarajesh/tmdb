@@ -18,7 +18,14 @@ function AuthProvider(props) {
         axios.post('https://api.themoviedb.org/3/authentication/session/new?api_key=3d9f6ef05faa3072ee2caf7fb6870964',
             { request_token: request_token }).then(response => {
                 localStorage.setItem('session_id', response.data.session_id)
+                getProfile(response.data.session_id)
             }).then(error => console.log(error))
+    }
+
+    const getProfile = (sessionId) => {
+        axios.get(`https://api.themoviedb.org/3/account?api_key=3d9f6ef05faa3072ee2caf7fb6870964&session_id=${sessionId}`).then(response => {
+            localStorage.setItem('avatar', response.data.avatar.gravatar.hash)
+        }).then(error => console.log(error))
     }
 
     const defaultContext = {
