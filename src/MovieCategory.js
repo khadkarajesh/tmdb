@@ -1,9 +1,10 @@
 import React, { useState, useContext, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Tabs, Tab, CssBaseline, Toolbar } from '@material-ui/core';
+import { AppBar, Tabs, Tab, CssBaseline, Avatar } from '@material-ui/core';
 import Search from './component/Search'
 import MovieList from './MovieList'
 import { AppContext } from './AppContext'
+import DottedMenu from './component/DottedMenu'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -16,7 +17,11 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        maxHeight:'64px'
+        padding: '8px'
+    },
+    toolbar: {
+        display: 'flex',
+        justifyContent: 'space-between'
     }
 }));
 
@@ -38,7 +43,7 @@ export default function MovieTabs() {
             <CssBaseline />
             <div className={classes.root}>
                 <AppBar position="static" className={classes.appBar} >
-                    <Toolbar>
+                    <div style={{ display: 'flex' }}>
                         <Tabs value={value} onChange={changeMenu}>
                             {
                                 categories.map((item) => {
@@ -46,8 +51,12 @@ export default function MovieTabs() {
                                 })
                             }
                         </Tabs>
-                        <Search />
-                    </Toolbar>
+                        <div style={{ alignItems: 'center', position: 'relative', top: '6px' }}><Search /></div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <Avatar />
+                        <DottedMenu />
+                    </div>
                 </AppBar>
                 <MovieList />
             </div>

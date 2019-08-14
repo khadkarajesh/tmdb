@@ -39,7 +39,7 @@ export default (props) => {
     const classes = useStyles()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const { setAuthenticated, setAuthBody } = useContext(AuthContext)
+    const { setAuthenticated, setAuthBody , createSession} = useContext(AuthContext)
 
     const setValue = (event) => {
         switch (event.target.id) {
@@ -73,6 +73,7 @@ export default (props) => {
                     { username: username, password: password, request_token: response.data.request_token })
                 setAuthenticated(true)
                 setAuthBody(session.data)
+                createSession(session.data.request_token)
                 props.history.push('/movies')
             }
         }

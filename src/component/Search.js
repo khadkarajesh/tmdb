@@ -74,6 +74,7 @@ const useStyles = makeStyles(theme => ({
   },
   suggestion: {
     display: 'block',
+    alignItems:'center'
   },
   suggestionsList: {
     margin: 0,
@@ -99,7 +100,7 @@ const useStyles = makeStyles(theme => ({
       width: 'auto',
     },
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   searchIcon: {
     width: theme.spacing(7),
