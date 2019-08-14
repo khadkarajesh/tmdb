@@ -35,7 +35,7 @@ export default function MovieList() {
                 <Grid item xs={12}>
                     <Grid container justify="center" spacing={2}>
                         {movies.map(item => (
-                            <Grid key={item} item>
+                            <Grid key={item} item key={item.id}>
                                 <Link to={`/movies/${item.id}`}>
                                     <img src={`http://image.tmdb.org/t/p/w300/${item.poster_path}`} alt={item.title} />
                                 </Link>

@@ -15,7 +15,8 @@ const useStyles = makeStyles(theme => ({
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        maxHeight:'64px'
     }
 }));
 
@@ -41,7 +42,7 @@ export default function MovieTabs() {
                         <Tabs value={value} onChange={changeMenu}>
                             {
                                 categories.map((item) => {
-                                    return <Tab label={item.replace('_', ' ')} />
+                                    return <Tab label={item.replace('_', ' ')} key={item} />
                                 })
                             }
                         </Tabs>
