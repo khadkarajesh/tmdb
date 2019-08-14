@@ -10,6 +10,7 @@ import { makeStyles, fade } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search'
 import axios from 'axios'
 import useDebounce from './useDebounce'
+import { Link, withRouter } from 'react-router-dom'
 
 function renderInputComponent(inputProps) {
   const { classes, inputRef = () => { }, ref, ...other } = inputProps;
@@ -46,7 +47,7 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
     <MenuItem selected={isHighlighted} component="div">
       <div>
         {parts.map(part => (
-          <span key={part.text} style={{ fontWeight: part.highlight ? 500 : 400 }}>
+          <span key={part.text} style={{ fontWeight: part.highlight ? 500 : 400 }} >
             {part.text}
           </span>
         ))}
@@ -57,7 +58,7 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
 
 
 function getSuggestionValue(suggestion) {
-  return suggestion.label;
+  return suggestion.title;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -122,7 +123,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Search() {
+ const Search = withRouter(({ history }) => {
   const classes = useStyles();
   const [searchTerm, setSearchTerm] = useState('')
   const [anchorEl, setAnchorEl] = useState(null);
@@ -131,11 +132,11 @@ export default function Search() {
 
   useEffect(() => {
     if (debouncedSearchTerm) {
-        searchMovies(debouncedSearchTerm)
+      searchMovies(debouncedSearchTerm)
     } else {
-        setSuggestions([])
+      setSuggestions([])
     }
-}, [debouncedSearchTerm])
+  }, [debouncedSearchTerm])
 
 
   const handleSuggestionsFetchRequested = ({ value }) => {
@@ -155,8 +156,13 @@ export default function Search() {
     setSearchTerm(newValue)
   };
 
+  const onSuggestionSelected = (e, { suggestion}) => {
+    history.push(`/movies/${suggestion.id}`)
+  }
+
   const autosuggestProps = {
     renderInputComponent,
+    onSuggestionSelected,
     suggestions: stateSuggestions,
     onSuggestionsFetchRequested: handleSuggestionsFetchRequested,
     onSuggestionsClearRequested: handleSuggestionsClearRequested,
@@ -184,7 +190,7 @@ export default function Search() {
         suggestion: classes.suggestion,
       }}
       renderSuggestionsContainer={options => (
-        <Popper anchorEl={anchorEl} open={Boolean(options.children)} style={{top:'10px'}}>
+        <Popper anchorEl={anchorEl} open={Boolean(options.children)} style={{ top: '10px' }}>
           <Paper
             square
             {...options.containerProps}
@@ -195,4 +201,6 @@ export default function Search() {
       )}
     />
   );
-}
+})
+
+export default Search
