@@ -9,7 +9,6 @@ function AuthProvider(props) {
     useEffect(() => {
         window.localStorage.setItem('auth', authenticated)
         window.localStorage.setItem('authBody', authBody)
-        console.log('called here')
     }, [authenticated, authBody])
 
     const defaultContext = {

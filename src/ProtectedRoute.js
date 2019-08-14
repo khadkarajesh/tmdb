@@ -8,7 +8,7 @@ export default ({ components: Component = null, render: Render = null, ...routeP
         <Route
             {...routeProps}
             render={props =>
-                authenticated ? (
+                authenticated === 'true' ? (
                     Render ? (
                         Render(props)
                     ) : Component ? (
