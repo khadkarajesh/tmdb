@@ -5,6 +5,7 @@ import Search from './component/Search'
 import MovieList from './MovieList'
 import { AppContext } from './AppContext'
 import DottedMenu from './component/DottedMenu'
+import MovieGenres from './component/MovieGenres'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -52,6 +53,7 @@ export default function MovieTabs() {
                             }
                         </Tabs>
                         <div style={{ alignItems: 'center', position: 'relative', top: '6px' }}><Search /></div>
+                        <MovieGenres />
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <Avatar src={`https://www.gravatar.com/avatar/${localStorage.getItem('avatar')}`}/>

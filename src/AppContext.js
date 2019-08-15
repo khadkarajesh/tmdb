@@ -9,10 +9,15 @@ export default function AppProvider(props) {
     let [currentPage, setCurrentPage] = useState(1)
     const [loading, setLoading] = useState(false)
     const [category, setCategory] = useState('popular')
+    const [genres, setGenres] = useState([])
 
     useEffect(() => {
         fetchMovies(currentPage)
     }, [currentPage, category])
+
+    useEffect(() => {
+        fetchGenres()
+    }, [])
 
     const fetchMovies = (page) => {
         setLoading(true)
@@ -30,6 +35,16 @@ export default function AppProvider(props) {
             })
     }
 
+    const fetchGenres = () => {
+        axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=3d9f6ef05faa3072ee2caf7fb6870964&language=en-US')
+            .then(response => {
+                setGenres(response.data.genres)
+            })
+            .catch(error => {
+
+            })
+    }
+
     const loadMore = () => {
         setCurrentPage(currentPage++)
     }
@@ -41,7 +56,14 @@ export default function AppProvider(props) {
         setCategory(category)
     }
 
-    let data = { fetchMovies, movies, loading, loadMore , changeCategory}
+    let data = {
+        fetchMovies,
+        movies,
+        loading,
+        loadMore,
+        changeCategory,
+        genres
+    }
     return (
         <AppContext.Provider value={data}>
             {props.children}
