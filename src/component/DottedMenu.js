@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { AuthContext } from '../AuthContext'
+import { withRouter } from 'react-router-dom'
+
+
 
 const options = [
   'Logout',
@@ -10,9 +14,10 @@ const options = [
 
 const ITEM_HEIGHT = 48;
 
-export default function DottedMenu() {
+const dottedMenu = withRouter(({ history }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const { logout } = useContext(AuthContext)
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
@@ -20,6 +25,8 @@ export default function DottedMenu() {
 
   function handleClose() {
     setAnchorEl(null);
+    logout()
+    history.push('/login')
   }
 
   return (
@@ -54,4 +61,6 @@ export default function DottedMenu() {
       </Menu>
     </div>
   );
-}
+})
+
+export default dottedMenu

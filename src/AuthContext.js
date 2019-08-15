@@ -5,8 +5,8 @@ const AuthContext = React.createContext()
 const AuthConsumer = AuthContext.Consumer
 
 function AuthProvider(props) {
-    const [authenticated, setAuthenticated] = useState(window.localStorage.getItem('auth') || false)
-    const [authBody, setAuthBody] = useState(window.localStorage.getItem('authBody') || null)
+    const [authenticated, setAuthenticated] = useState(localStorage.getItem('auth') || false)
+    const [authBody, setAuthBody] = useState(localStorage.getItem('authBody') || null)
 
     useEffect(() => {
         window.localStorage.setItem('auth', authenticated)
@@ -28,12 +28,17 @@ function AuthProvider(props) {
         }).then(error => console.log(error))
     }
 
+    const logout = () => {
+        localStorage.clear()
+    }
+
     const defaultContext = {
         authenticated,
         setAuthenticated,
         authBody,
         setAuthBody,
-        createSession
+        createSession,
+        logout
     }
 
     return (

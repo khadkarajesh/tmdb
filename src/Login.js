@@ -3,6 +3,7 @@ import { TextField, Button, FormControlLabel, Checkbox } from '@material-ui/core
 import { makeStyles } from '@material-ui/styles';
 import axios from 'axios'
 import { AuthContext } from './AuthContext';
+import { withRouter } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -35,11 +36,11 @@ const useStyles = makeStyles(theme => ({
 
 
 
-export default (props) => {
+const login = withRouter(({ history }) => {
     const classes = useStyles()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const { setAuthenticated, setAuthBody , createSession} = useContext(AuthContext)
+    const { setAuthenticated, setAuthBody, createSession } = useContext(AuthContext)
 
     const setValue = (event) => {
         switch (event.target.id) {
@@ -71,10 +72,9 @@ export default (props) => {
             if (response.status === 200) {
                 let session = await axios.post('https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=3d9f6ef05faa3072ee2caf7fb6870964',
                     { username: username, password: password, request_token: response.data.request_token })
-                setAuthenticated(true)
-                setAuthBody(session.data)
+                setAuthenticated('true')
                 createSession(session.data.request_token)
-                props.history.push('/movies')
+                history.push('/movies')
             }
         }
         catch (e) {
@@ -88,7 +88,7 @@ export default (props) => {
                 <form className={classes.form} onSubmit={getRequestId}>
                     <TextField
                         error={!isValidEmail(username)}
-                        helpingText={!isValidEmail ? 'enter valid email' : ''}
+                        helpingtext={!isValidEmail ? 'enter valid email' : ''}
                         variant="outlined"
                         margin="normal"
                         required
@@ -102,7 +102,7 @@ export default (props) => {
                     />
                     <TextField
                         error={password === ''}
-                        helpingText={password === '' ? 'enter valid password' : ''}
+                        helpingtext={password === '' ? 'enter valid password' : ''}
                         variant="outlined"
                         margin="normal"
                         required
@@ -132,5 +132,6 @@ export default (props) => {
             </div>
         </div>
     );
+})
 
-}
+export default login

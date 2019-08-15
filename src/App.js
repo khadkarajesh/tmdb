@@ -26,8 +26,8 @@ function App() {
           <Switch>
             <Route path="/login" exact component={Login} />
             <Route path="/" exact component={Login} />
-            <ProtectedRoute path="/movies" exact strict render ={props => <MovieCategory/>}/>
-            <ProtectedRoute path="/movies/:id" exact strict render ={props => <MovieDetail/>} />
+            <ProtectedRoute path="/movies" exact strict component={MovieCategory} />
+            <ProtectedRoute path="/movies/:id" exact strict component={MovieDetail} />
           </Switch>
         </Router>
       </AppProvider>
