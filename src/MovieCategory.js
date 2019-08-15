@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function MovieTabs() {
     const classes = useStyles();
-    const categories = ['popular', 'top_rated', 'now_playing']
+    const categories = ['popular', 'top_rated', 'now_playing','upcoming']
     const [value, setValue] = useState(0)
     const { changeCategory } = useContext(AppContext)
 
